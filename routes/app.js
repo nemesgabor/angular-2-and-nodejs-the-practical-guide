@@ -3,29 +3,33 @@ var User = require('../models/user');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-    User.findOne({},function(err, doc){
-        if(err){
-            return res.send('Error!');
-        }
-        res.render('node', {email:doc.email});
-    });
-    
+    res.render('index');
 });
 
-router.post('/', function(req, res, next) {
-    var email = req.body.email;
+// router.get('/', function (req, res, next) {
+//     User.findOne({},function(err, doc){
+//         if(err){
+//             return res.send('Error!');
+//         }
+//         res.render('node', {email:doc.email});
+//     });
+//     //res.render('node');
+// });
 
-    var user = new User({
-        firstName:'Elek',
-        lastName:'Teszt',
-        password: 'Secret1234',
-        email:email
-    });
-    user.save(function(err, result){
+// router.post('/', function(req, res, next) {
+//     var email = req.body.email;
 
-    });
+//     var user = new User({
+//         firstName:'Elek',
+//         lastName:'Teszt',
+//         password: 'Secret1234',
+//         email:email
+//     });
+//     user.save(function(err, result){
 
-    res.redirect('');
-});
+//     });
+
+//     res.redirect('/');
+// });
 
 module.exports = router;
