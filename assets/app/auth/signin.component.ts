@@ -1,4 +1,7 @@
+import { User } from './user.model';
+import { AuthService } from './auth.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 
 @Component({
@@ -8,7 +11,23 @@ import { FormGroup,FormControl,Validators } from '@angular/forms';
 export class SigninComponent {
     myForm: FormGroup;
 
+    constructor(private authService: AuthService, private router: Router) {}
+
     onSubmit(){
+        const user = new User(
+            this.myForm.value.email,
+            this.myForm.value.password
+        );
+        this.authService.signin(user)
+            .subscribe(
+                data => {
+                    console.info(data.token);
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    this.router.navigateByUrl('/');
+                },
+                error => console.error(error)
+            )
         console.log(this.myForm);
         this.myForm.reset();
     }
